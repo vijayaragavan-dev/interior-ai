@@ -2,6 +2,17 @@ import cv2
 import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter
 import os
+import requests
+import base64
+
+
+HF_API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2"
+
+
+def get_hf_api_key():
+    from dotenv import load_dotenv
+    load_dotenv()
+    return os.getenv('HUGGINGFACE_API_KEY')
 
 
 COLOR_VALUES = {
@@ -241,3 +252,74 @@ def process_room_image(image_path, color, style, output_path):
             os.remove(temp_file)
     
     return output_path
+
+
+def encode_image_to_base64(image_path):
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode("utf-8")
+
+
+def decode_base64_to_image(base64_string, output_path):
+    image_data = base64.b64decode(base64_string)
+    with open(output_path, "wb") as f:
+        f.write(image_data)
+    return output_path
+
+
+def generate_ai_design(image_path, color, style, output_path):
+    api_key = get_hf_api_key()
+    
+    if not api_key:
+        print("No HuggingFace API key found, using local processing")
+        return process_room_image(image_path, color, style, output_path)
+    
+    prompt = (
+        f"Interior of a small Indian room with brown tile flooring, "
+        f"{color} accent wall, modern {style} design, "
+        f"realistic lighting, practical furniture layout, "
+        f"high quality photo, interior design visualization"
+    )
+    
+    negative_prompt = (
+        "blurry, low quality, distorted, cartoon, anime, "
+        "abstract, text, watermark, signature"
+    )
+    
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "negative_prompt": negative_prompt,
+            "guidance_scale": 7.5,
+            "num_inference_steps": 30
+        }
+    }
+    
+    try:
+        response = requests.post(
+            HF_API_URL,
+            headers=headers,
+            json=payload,
+            timeout=60
+        )
+        
+        if response.status_code == 200:
+            image_data = response.content
+            with open(output_path, "wb") as f:
+                f.write(image_data)
+            print(f"AI design generated successfully")
+            return output_path
+        else:
+            print(f"HuggingFace API error: {response.status_code}, falling back to local processing")
+            return process_room_image(image_path, color, style, output_path)
+            
+    except requests.exceptions.Timeout:
+        print("API timeout, falling back to local processing")
+        return process_room_image(image_path, color, style, output_path)
+    except Exception as e:
+        print(f"AI generation failed: {str(e)}, falling back to local processing")
+        return process_room_image(image_path, color, style, output_path)

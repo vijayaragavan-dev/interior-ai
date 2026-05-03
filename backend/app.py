@@ -90,7 +90,7 @@ def generate():
         output_filepath = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
 
         try:
-            process_room_image(filepath, color, style, output_filepath)
+            generate_ai_design(filepath, color, style, output_filepath)
         except Exception as e:
             import shutil
             shutil.copy(filepath, output_filepath)
