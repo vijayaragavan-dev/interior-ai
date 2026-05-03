@@ -1,0 +1,122 @@
+You are a senior DevOps engineer and Git expert.
+
+Your task is to safely push my local project "interior-ai" to my GitHub repository:
+
+https://github.com/vijayaragavan-dev/interior-ai.git
+
+---
+
+## 🎯 GOAL
+
+Push the entire project to GitHub while ensuring:
+
+* No sensitive data is exposed
+* Clean repository structure
+* Proper version control setup
+* Professional project readiness
+
+---
+
+## ⚠️ SECURITY REQUIREMENTS (VERY IMPORTANT)
+
+1. NEVER upload:
+
+   * .env files
+   * API keys
+   * virtual environments (venv/)
+   * **pycache**/
+   * node_modules/
+
+2. Create a proper `.gitignore` file including:
+
+.env
+venv/
+**pycache**/
+*.pyc
+uploads/
+outputs/
+.DS_Store
+
+---
+
+## 🏗️ REQUIRED STEPS
+
+### 1. Initialize Git (if not already)
+
+git init
+
+---
+
+### 2. Add remote repository
+
+git remote add origin https://github.com/vijayaragavan-dev/interior-ai.git
+
+---
+
+### 3. Check status
+
+git status
+
+---
+
+### 4. Add all safe files
+
+git add .
+
+---
+
+### 5. Commit with proper message
+
+git commit -m "Initial commit - Interior AI project with image processing and 3D preview"
+
+---
+
+### 6. Set main branch
+
+git branch -M main
+
+---
+
+### 7. Push to GitHub
+
+git push -u origin main
+
+---
+
+## 🧠 EXTRA IMPROVEMENTS
+
+* Add README.md with:
+
+  * Project description
+  * Features
+  * Setup instructions
+* Ensure clean folder structure:
+  backend/
+  frontend/
+  uploads/
+  outputs/
+
+---
+
+## 🛠️ ERROR HANDLING
+
+If push fails:
+
+* Detect authentication issues
+* Suggest using GitHub Personal Access Token
+* Retry push
+
+---
+
+## 🏆 FINAL EXPECTATION
+
+* Project successfully pushed
+* No sensitive data leaked
+* Repository looks clean and professional
+* Ready for sharing and evaluation
+
+---
+
+Do NOT skip security steps.
+Do NOT push unsafe files.
+Ensure everything is clean and complete.

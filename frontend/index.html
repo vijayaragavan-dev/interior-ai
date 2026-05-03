@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interior AI - Smart Room Design</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interior AI</h1>
+            <p>Transform your room with AI-powered design suggestions</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <h2>Upload Your Room</h2>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="roomImage" accept="image/*" hidden>
+                    <div class="upload-placeholder">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p>Click to upload or drag and drop</p>
+                        <span>PNG, JPG, JPEG, GIF, WebP (Max 16MB)</span>
+                    </div>
+                    <div class="preview-container" id="previewContainer" style="display: none;">
+                        <img id="imagePreview" alt="Room preview">
+                        <button class="remove-btn" id="removeImage">×</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="preferences-section">
+                <h2>Select Preferences</h2>
+                <div class="preferences-grid">
+                    <div class="preference-group">
+                        <label for="colorTheme">Color Theme</label>
+                        <select id="colorTheme">
+                            <option value="">Select color...</option>
+                            <option value="purple luxury">Purple Luxury</option>
+                            <option value="grey modern">Grey Modern</option>
+                            <option value="mint green">Mint Green</option>
+                            <option value="navy blue">Navy Blue</option>
+                            <option value="terracotta">Terracotta</option>
+                            <option value="sage green">Sage Green</option>
+                            <option value="mustard yellow">Mustard Yellow</option>
+                            <option value="blush pink">Blush Pink</option>
+                            <option value="teal">Teal</option>
+                            <option value="charcoal">Charcoal</option>
+                        </select>
+                    </div>
+
+                    <div class="preference-group">
+                        <label for="style">Style</label>
+                        <select id="style">
+                            <option value="">Select style...</option>
+                            <option value="modern">Modern</option>
+                            <option value="luxury">Luxury</option>
+                            <option value="minimal">Minimal</option>
+                            <option value="scandinavian">Scandinavian</option>
+                            <option value="industrial">Industrial</option>
+                        </select>
+                    </div>
+
+                    <div class="preference-group">
+                        <label for="budget">Budget</label>
+                        <select id="budget">
+                            <option value="">Select budget...</option>
+                            <option value="low">Low (Budget-Friendly)</option>
+                            <option value="medium">Medium (Mid-Range)</option>
+                            <option value="high">High (Premium)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <button class="generate-btn" id="generateBtn" disabled>
+                <span>Generate Design</span>
+            </button>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Generating your room design...</p>
+                <p class="loading-note">This may take a few seconds</p>
+            </div>
+
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
+
+            <section class="output-section" id="outputSection" style="display: none;">
+                <h2>Generated Design</h2>
+                <div class="output-grid">
+                    <div class="output-image-container">
+                        <img id="generatedImage" alt="Generated room design">
+                    </div>
+                    
+                    <div class="suggestions-container">
+                        <h3>Smart Suggestions</h3>
+                        <div id="suggestionsList"></div>
+                    </div>
+                </div>
+
+                <div class="3d-preview-container">
+                    <h3>3D Room Preview</h3>
+                    <div id="threeJsContainer"></div>
+                    <p class="3d-note">Drag to rotate • Scroll to zoom</p>
+                    <button class="toggle-3d-btn" id="toggle3D">Hide 3D</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Interior AI - Realistic room design for Indian homes</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
